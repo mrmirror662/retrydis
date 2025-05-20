@@ -9,7 +9,7 @@ A Rust-based retry storage module designed for persistent and fixed-sized cache 
 
 ## TODO
 [ ] User layout/ user data separation  
-[ ] Event loop (parse commands[Regex])
+[ ] Event loop (parse commands\[Regex\])
 [ ] LRU cache 
 
 ## Objective
