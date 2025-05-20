@@ -11,7 +11,7 @@ pub enum DataType {
 pub struct Record {
     pub data: String,
     pub type_suggestion: DataType,
-    pub uid: String,
+    pub key: String,
 }
 pub struct Entry {
     pub data: String,
@@ -29,7 +29,7 @@ impl Entry {
 
 pub trait AbstractStorage {
     fn get(&self, key: &str) -> Option<Record>;
-    fn put(&mut self, value: Entry) -> String;
+    fn put(&mut self, key: &str, value: Entry);
     fn remove(&mut self, key: &str);
     fn size(&self) -> usize;
     fn clear(&mut self);

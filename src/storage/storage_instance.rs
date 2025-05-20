@@ -1,5 +1,8 @@
 use super::abstract_storage::*;
 use super::fixed_sized_cache::FixedSizedCache;
+
+#[derive(Debug)]
+
 pub enum StorageType {
     FixedCache,
 }
@@ -21,8 +24,8 @@ impl StorageInstance {
     pub fn get(&self, key: &str) -> Option<Record> {
         self.cache.get(key)
     }
-    pub fn put(&mut self, value: Entry) -> String {
-        self.cache.put(value)
+    pub fn put(&mut self, key: &str, value: Entry) {
+        self.cache.put(key, value)
     }
     pub fn remove(&mut self, key: &str) {
         self.cache.remove(key)
@@ -42,5 +45,10 @@ impl StorageInstance {
     }
     pub fn list_all(&self) -> Vec<Record> {
         self.cache.list_all()
+    }
+    pub fn display(&self) {
+        println!("Current Storage Type: {:?}", self.current_storage_type);
+        println!("Cache Size: {}", self.cache.size());
+        println!("Cache Contents: {:?}", self.cache.list_all());
     }
 }

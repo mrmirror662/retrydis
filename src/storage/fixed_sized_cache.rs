@@ -1,6 +1,6 @@
 use super::abstract_storage::*;
-use rand::Rng;
 
+#[derive(Debug)]
 pub struct FixedSizedCache {
     cache: std::collections::HashMap<String, Record>,
     size: usize,
@@ -23,21 +23,18 @@ impl AbstractStorage for FixedSizedCache {
         self.cache.get(key).cloned()
     }
 
-    fn put(&mut self, value: Entry) -> String {
-        let mut rng = rand::rng();
-        let uid = rng.random::<u64>().to_string();
-        let value_size = uid.len() + value.data.len();
+    fn put(&mut self, key: &str, value: Entry) {
+        let value_size = key.len() + value.data.len();
         if self.current_size + value_size > self.size {
             panic!("Value size exceeds cache size");
         }
         let record = Record {
             data: value.data,
             type_suggestion: value.type_suggestion,
-            uid: uid.clone(),
+            key: key.to_string().clone(),
         };
         self.current_size += value_size;
-        self.cache.insert(uid.clone(), record);
-        return uid;
+        self.cache.insert(key.to_string(), record);
     }
 
     fn remove(&mut self, key: &str) {
